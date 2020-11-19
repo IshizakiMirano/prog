@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>セレクトボックスを関数化！！</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/function.css">
+</head>
+<body bgcolor="#fef4f4" text="#203744">
+<h1>あなたの誕生日は？</h1>
+<main>
+    <!-- セレクトボックス作成[START] -->
+    <select id="year"></select>
+    <select id="month"></select>
+    <select id="date"></select>
+    <!-- セレクトボックス作成[END] -->
+        <ul>
+            <li id="save">save</li>
+            <li id="clear">clear</li>
+        </ul>
+</main>
+<table id="list">
+    <!-- ここに追加データが挿入される -->
+</table>
+
+<script>
+function ymd(start, end, id){
+    let str = ""; //例) y += '<option value="'+i+'">'+i+'</option>';
+    for(let i=start; i<=end; i++){
+       str += '<option value="'+i+'">'+i+'</option>';
+    }
+    $(id).html(str);
+}
+ymd(1900, 2099, "#year");
+ymd(1, 12,"#month");
+ymd(1, 31, "#date");
+
+$("#save").on("click",function(){
+    const key = $("#key").val();
+    const year = $("#year").val();
+    const month = $("#month").val();
+    const date = $("#date").val();
+    alert(year);
+    localStorage.setItem(month, date); //変数渡すときは”　”をつけない
+    const html = '<tr><th>'+month+'月</th><td>'+date+'日</td></tr>';
+    $("#list").append(html);
+});
+
+$("#clear").on("click",function(){
+    localStorage.clear();
+    $("#list").empty();
+});
+
+for(let i=0; i<localStorage.length; i++){
+    const month = localStorage.key(i);            
+    const date = localStorage.getItem(month);    
+    const html = '<tr><th>'+month+'月</th><td>'+date+'日</td></tr>';
+    $("#list").append(html);
+}
+
+</script>
+</body>
+</html>
