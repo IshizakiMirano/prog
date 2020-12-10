@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<title>クイズ練習（複数）</title>
+</head>
+<body>
+
+<header>
+  
+</header>
+
+<main>
+  <div class="quiz_area">
+    <div class="quiz_set">
+      第<span class="quiz_no">1</span>問
+      <div class="quiz_question"></div>
+      <div class="quiz_ans_area">
+          <ul></ul>
+      </div>
+      <div class="quiz_area_bg"></div>
+      <div class="quiz_area_icon"></div>
+  </div>
+  <p>
+    <input type="radio" name="toi" value="1"><span id="toi1">選択肢１</span>
+    <input type="radio" name="toi" value="2"><span id="toi2">選択肢２</span>
+    <input type="radio" name="toi" value="3"><span id="toi3">選択肢３</span>
+  </p>
+  <div class="quiz_result"></div>
+</main>
+<footer><h2>結果</h2></footer>
+
+<script>
+//ここから記述領域［START］
+//以下に配列を記述してください。
+$(function(){
+    var quizArea = $('.qs'); //クイズを管理するDOMを指定 .quiz_area
+    var quiz_html = quizArea.html(); //もう一度　を押した時に元に戻すため初期HTMLを変数で保管
+    var quiz_cnt = 0; //現在の問題数を管理
+    var quiz_fin_cnt = 5; //何問で終了か設定（クイズ数以下であること）
+    var quiz_success_cnt = 0; //問題の正解数
+  //問題文[配列]
+  const qs = ["通るときには閉まって、通らないときには開いているものは何？",
+              "話すことがとても好きな道具は何？",
+              "世界の真ん中にいる虫は何？",
+              "いちごの花は、なに色？",
+              "クリスマスの日に森の動物達が飾り付けを始めた。手伝わなかった動物は次のうちどの動物？",
+              "ゴリラの血液型は1種類しかないが何型？"
+              ];
+    
+  //回答選択肢[多重配列]
+  const toi = [
+    ["踏み切り","洗濯機","冷蔵庫"],
+    ["スプーン","シャベル","しゃもじ"],
+    ["てんとう虫","カマキリ","蚊"],
+    ["黄色","白","ピンク"],
+    ["しか","うま","らいおん"],
+    ["A型","B型","AB型"]
+  ];
+  
+  //答え[配列]
+  const ans = [1, 2, 3, 2, 3, 2];
+
+  //1.最初の問題文＆回答選択肢＆回答値を設定
+  let i = 0;
+  $("#quest").text(qs[i]);
+  $("#toi1").text(toi[i][0]);
+  $("#toi2").text(toi[i][1]);
+  $("#toi3").text(toi[i][2]);
+  $("#toi4").text(toi[i][3]);
+  $("#toi5").text(toi[i][4]);
+  $("#toi6").text(toi[i][5]);
+
+  quizReset();
+
+  //2.ラジオボタンをクリックしたらイベント発生！
+  $("[name=toi]").on("click",function(){
+
+    const v = $(this).val();
+    if(ans[i] == v){
+      //正解の処理 〇を表示
+      quizArea.find('.quiz_area_icon').addClass('true');
+            //正解数をカウント
+            quiz_success_cnt++; //追加
+    }else{
+      //不正解の処理
+      quizArea.find('.quiz_area_icon').addClass('false');
+    }
+
+    i++;
+    $("#quest").text(qs[i]);
+    $("#toi1").text(toi[i][0]);
+    $("#toi2").text(toi[i][1]);
+    $("#toi3").text(toi[i][2]);
+    $("#toi4").text(toi[i][3]);
+    $("#toi5").text(toi[i][4]);
+    $("#toi6").text(toi[i][5]);
+});
+
+//問題を表示する関数
+function quizShow(){
+        //何問目かを表示
+        quizArea.find('.quiz_no').text((quiz_cnt + 1));
+        //正解の回答を取得する
+        var success = aryQuiz[quiz_cnt]['answer'][0];
+        //現在の選択肢表示を削除する
+        quizArea.find('.quiz_ans_area ul').empty();
+        //問題文の配列を繰り返し表示する
+        $.each(aryHoge, function(key, value){
+            var fuga = '<li>' + value + '</li>';
+        //正解の場合はdata属性を付与する
+          if(success === value){
+              fuga = '<li data-true="1">' + value + '</li>';
+          }
+            quizArea.find('.quiz_ans_area ul').append(fuga);
+        });
+    }
+
+  //結果を表示する関数
+  function quizResult(){
+        quizArea.find('.quiz_set').hide();
+        var text = quiz_fin_cnt + '問中' + quiz_success_cnt + '問正解！';
+        if(quiz_fin_cnt === quiz_success_cnt){
+            text += '<br>全問正解おめでとう！';
+        }
+        text += '<br><input type="button" value="もう一度挑戦する" class="quiz_restart p-10">';
+        quizArea.find('.quiz_result').html(text);
+        quizArea.find('.quiz_result').show();
+    }
+});
+//i++;の止め方。
+//正解の数を表示
+//ここまでが記述領域［END］
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<title>クイズ練習（複数）</title>
+</head>
+<body>
+
+<header>
+  <h1>問題1</h1>
+</header>
+
+<main>
+  <p id="quest">ここに問題が出題されます</p>
+  <p>
+    <input type="radio" name="toi" value="1"><span id="toi1">選択肢１</span>
+    <input type="radio" name="toi" value="2"><span id="toi2">選択肢２</span>
+    <input type="radio" name="toi" value="3"><span id="toi3">選択肢３</span>
+  </p>
+  <div class="quiz_result"></div>
+</main>
+<footer><h2>結果</h2></footer>
+
+<script>
+//ここから記述領域［START］
+//以下に配列を記述してください。
+  //問題文[配列]
+  const qs = ["サンタさんはどこから入ってくるでしょう",
+              "「サンタクロース村」がある国は？",
+              "クリスマスにポインセチアの花を飾る様になったのは何人でしょう",
+              "サンタのそりを引くのは全部で何頭でしょう",
+              "クリスマスの日に森の動物達が飾り付けを始めた。手伝わなかった動物は次のうちどの動物？",
+              "真っ赤なお鼻のトナカイさんたちの性別は何でしょう。"
+              ];
+    
+  //回答選択肢[多重配列]
+  const toi = [
+    ["煙突","玄関","勝手口"],
+    ["ノルウェー","フィンランド","スウェーデン"],
+    ["メキシコ人","アメリカ人","日本人"],
+    ["６頭","９頭","１１頭"],
+    ["しか","うま","らいおん"],
+    ["メス","オス","オスとメス"]
+  ];
+  
+  //答え[配列]
+  const ans = [1, 2, 1, 2, 3, 1];
+
+  //1.最初の問題文＆回答選択肢＆回答値を設定
+  let i = 0;
+  
+  $("#quest").text(qs[i]);
+  $("#toi1").text(toi[i][0]);
+  $("#toi2").text(toi[i][1]);
+  $("#toi3").text(toi[i][2]);
+  $("#toi4").text(toi[i][3]);
+  $("#toi5").text(toi[i][4]);
+  $("#toi6").text(toi[i][5]);
+
+  //2.ラジオボタンをクリックしたらイベント発生！
+  $("[name=toi]").on("click",function(){
+
+    if(i == 0){
+      $("h1").text("問題2");
+    }else if(i == 1){
+      $("h1").text("問題3");
+    }else if(i == 2){
+      $("h1").text("問題4");
+    }else if(i == 3){
+      $("h1").text("問題5");
+    }else if(i == 4){
+      $("h1").text("問題6");
+    }
+
+    const v = $(this).val();
+    if(ans[i] == v){
+      $("h2").text("前の問題は正解");
+    }else{
+      $("h2").text("前の問題は不正解");
+    }
+
+    i++;     //配列に入れるiがプラスされる。
+    $("#quest").text(qs[i]);
+    $("#toi1").text(toi[i][0]);
+    $("#toi2").text(toi[i][1]);
+    $("#toi3").text(toi[i][2]);
+    $("#toi4").text(toi[i][3]);
+    $("#toi5").text(toi[i][4]);
+    $("#toi6").text(toi[i][5]);
+});
+
+//i++;の止め方。
+//正解の数を表示
+//ここまでが記述領域［END］
+</script>
+</body>
+</html>
