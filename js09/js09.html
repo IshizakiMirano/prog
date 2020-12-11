@@ -10,7 +10,8 @@
 <body>
 
 <header>
-  <h1>問題1</h1>
+  <h1 id="mon">問題1</h1>
+    <span id="kazu"></span>
 </header>
 
 <main>
@@ -51,6 +52,7 @@
 
   //1.最初の問題文＆回答選択肢＆回答値を設定
   let i = 0;
+  let s = 0;
   
   $("#quest").text(qs[i]);
   $("#toi1").text(toi[i][0]);
@@ -63,21 +65,12 @@
   //2.ラジオボタンをクリックしたらイベント発生！
   $("[name=toi]").on("click",function(){
 
-    if(i == 0){
-      $("h1").text("問題2");
-    }else if(i == 1){
-      $("h1").text("問題3");
-    }else if(i == 2){
-      $("h1").text("問題4");
-    }else if(i == 3){
-      $("h1").text("問題5");
-    }else if(i == 4){
-      $("h1").text("問題6");
-    }
-
-    const v = $(this).val();
+    if(i <= 5){
+      const v = $(this).val();
     if(ans[i] == v){
       $("h2").text("前の問題は正解");
+      s++;
+      $("#kazu").html(s+"問正解");
     }else{
       $("h2").text("前の問題は不正解");
     }
@@ -87,9 +80,10 @@
     $("#toi1").text(toi[i][0]);
     $("#toi2").text(toi[i][1]);
     $("#toi3").text(toi[i][2]);
-    $("#toi4").text(toi[i][3]);
-    $("#toi5").text(toi[i][4]);
-    $("#toi6").text(toi[i][5]);
+    $("#mon").html("第"+(i+1)+"問");
+    }else{
+      alert("終了");
+    }
 });
 
 //i++;の止め方。
