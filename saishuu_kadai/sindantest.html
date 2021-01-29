@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/test_sample.css">
+<title>パーソナルカラー診断</title>
+</head>
+<body>
+
+<header>
+  <h1 id="mon">パーソナルカラー診断</h1>
+    <span id="kazu"></span>
+</header>
+
+<main>
+  <p id="quest">ここに問題が出題されます</p>
+  <p>
+    <input type="radio" name="toi" value="1"><span id="toi1">選択肢１</span>
+    <input type="radio" name="toi" value="2"><span id="toi2">選択肢２</span>
+  </p>
+  <div class="quiz_result"></div>
+</main>
+<footer><h2>結果が表示されるよ！</h2></footer>
+
+<script>
+  //問題文
+  const qs = ["どちらの髪色が似あう？",
+              "肌の色は？",
+              "褒められるトップスの色は？",
+              "しっくりくるアクセサリーは？",
+              "元の唇の色は？",
+              "周りからもたれる印象は？",
+              "肌の特徴は？",
+              "瞳の特徴は？",
+              "日焼けすると？",
+              "褒められやすい服の色は？",
+              ];
+    
+  //回答選択肢
+  const toi = [
+    ["ブラウン","ブラック"],
+    ["イエローオークル","ピンクオークル"],
+    ["ブラウン・キャメル","グレー・ブラック"],
+    ["ゴールド","シルバー"],
+    ["血色感がない","赤みがある"],
+    ["キュート","大人っぽい"],
+    ["色白～普通肌","普通～色黒"],
+    ["明るいブラウン","ダークブラウン"],
+    ["赤くなる","小麦色になる"],
+    ["アイボリー","ダークブラウン"]
+  ];
+  
+  //答え
+  const ans = [2, 1, 1, 1, 1, 2, 2, 2, 2, 2];
+
+  //1.最初の問題文＆回答選択肢＆回答値を設定
+  let i = 0;
+  let s = 0;
+  
+  $("#quest").text(qs[i]);
+  $("#toi1").text(toi[i][0]);
+  $("#toi2").text(toi[i][1]);
+
+  //2.ラジオボタンをクリックしたらイベント発生！
+  $("[name=toi]").on("click",function(){
+    if(i < 10){
+      const v = $(this).val();
+      if(ans[i] == v){
+      $("h2").text("診断中");
+      s++;
+      $("#kazu").html(s+"問該当");
+    }else{
+      $("h2").text("診断中");
+    }
+      i++;     
+      $("#quest").text(qs[i]);
+      $("#toi1").text(toi[i][0]);
+      $("#toi2").text(toi[i][1]);
+      //$("#mon").html("第"+(i+1)+"問");
+    }else{
+      alert("終了");
+      $("h2").text("該当した数：0~1 winter type; 2~4 summer type; 5~7 spring type; 8~10 autumn type");
+    }
+  });
+
+</script>
+</body>
+</html>
